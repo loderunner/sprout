@@ -9,6 +9,8 @@ THEN: 'then';
 ELSE: 'else';
 TRUE: 'true';
 FALSE: 'false';
+FUN: 'fun';
+ARROW: '->';
 EQUALS: '=';
 
 INT: [0-9]+;
@@ -18,6 +20,9 @@ WS: [ \t\r\n]+ -> skip;
 
 // ============ Parser Rules ============
 
-expr: letExpr | ifExpr | INT | TRUE | FALSE | IDENT;
+expr: letExpr | ifExpr | funExpr | appExpr;
 letExpr: LET IDENT EQUALS expr IN expr;
 ifExpr: IF expr THEN expr ELSE expr;
+funExpr: FUN '(' IDENT ':' IDENT ')' ARROW expr;
+appExpr: primaryExpr | appExpr '(' expr ')';
+primaryExpr: INT | TRUE | FALSE | IDENT | '(' expr ')';

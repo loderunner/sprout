@@ -85,43 +85,20 @@ func (b *ASTBuilder) VisitExpr(ctx *parser.ExprContext) any {
 	if letCtx := ctx.LetExpr(); letCtx != nil {
 		return b.VisitLetExpr(letCtx.(*parser.LetExprContext))
 	}
+
 	if ifCtx := ctx.IfExpr(); ifCtx != nil {
 		return b.VisitIfExpr(ifCtx.(*parser.IfExprContext))
 	}
-	if t := ctx.INT(); t != nil {
-		val, err := strconv.Atoi(t.GetText())
-		if err != nil {
-			panic(fmt.Sprintf("failed to parse INT token `%q` at %d:%d: %s",
-				t.GetText(),
-				ctx.GetStart().GetLine(),
-				ctx.GetStart().GetColumn()+1,
-				err,
-			))
-		}
-		return IntLiteral{
-			Value:   val,
-			located: located{loc: rangeFromContext(ctx)},
-		}
+
+	if funCtx := ctx.FunExpr(); funCtx != nil {
+		return b.VisitFunExpr(funCtx.(*parser.FunExprContext))
 	}
-	if t := ctx.TRUE(); t != nil {
-		return BoolLiteral{
-			Value:   true,
-			located: located{loc: rangeFromContext(ctx)},
-		}
+
+	if appCtx := ctx.AppExpr(); appCtx != nil {
+		return b.VisitAppExpr(appCtx.(*parser.AppExprContext))
 	}
-	if t := ctx.FALSE(); t != nil {
-		return BoolLiteral{
-			Value:   false,
-			located: located{loc: rangeFromContext(ctx)},
-		}
-	}
-	if t := ctx.IDENT(); t != nil {
-		return VarExpr{
-			Name:    t.GetText(),
-			located: located{loc: rangeFromContext(ctx)},
-		}
-	}
-	panic(fmt.Sprintf("unexpected expression in parser: `%s`", ctx.GetText()))
+
+	panic(fmt.Sprintf("unexpected expression while parsing expression: `%s`", ctx.GetText()))
 }
 
 func (b *ASTBuilder) VisitLetExpr(ctx *parser.LetExprContext) any {
@@ -146,4 +123,83 @@ func (b *ASTBuilder) VisitIfExpr(ctx *parser.IfExprContext) any {
 		Else:    els,
 		located: located{loc: rangeFromContext(ctx)},
 	}
+}
+
+func (b *ASTBuilder) VisitFunExpr(ctx *parser.FunExprContext) any {
+	paramName := ctx.IDENT(0).GetText()
+	paramType := ctx.IDENT(1).GetText()
+	body := b.VisitExpr(ctx.Expr().(*parser.ExprContext)).(Expr)
+	return FunExpr{
+		ParamName: paramName,
+		ParamType: paramType,
+		Body:      body,
+		located:   located{loc: rangeFromContext(ctx)},
+	}
+}
+
+func (b *ASTBuilder) VisitAppExpr(ctx *parser.AppExprContext) any {
+	if appCtx := ctx.AppExpr(); appCtx != nil {
+		exprCtx := ctx.Expr()
+		if exprCtx == nil {
+			panic("missing expression in function application")
+		}
+		fun := b.VisitAppExpr(appCtx.(*parser.AppExprContext)).(Expr)
+		arg := b.VisitExpr(exprCtx.(*parser.ExprContext)).(Expr)
+		return AppExpr{
+			Fun:     fun,
+			Arg:     arg,
+			located: located{loc: rangeFromContext(ctx)},
+		}
+	}
+
+	if primaryCtx := ctx.PrimaryExpr(); primaryCtx != nil {
+		return b.VisitPrimaryExpr(primaryCtx.(*parser.PrimaryExprContext))
+	}
+
+	panic(fmt.Sprintf("unexpected expression while parsing function application: `%s`", ctx.GetText()))
+}
+
+func (b *ASTBuilder) VisitPrimaryExpr(ctx *parser.PrimaryExprContext) any {
+	if parenCtx := ctx.Expr(); parenCtx != nil {
+		return b.VisitExpr(parenCtx.(*parser.ExprContext))
+	}
+
+	if t := ctx.INT(); t != nil {
+		val, err := strconv.Atoi(t.GetText())
+		if err != nil {
+			panic(fmt.Sprintf("failed to parse INT token `%q` at %d:%d: %s",
+				t.GetText(),
+				ctx.GetStart().GetLine(),
+				ctx.GetStart().GetColumn()+1,
+				err,
+			))
+		}
+		return IntLiteral{
+			Value:   val,
+			located: located{loc: rangeFromContext(ctx)},
+		}
+	}
+
+	if t := ctx.TRUE(); t != nil {
+		return BoolLiteral{
+			Value:   true,
+			located: located{loc: rangeFromContext(ctx)},
+		}
+	}
+
+	if t := ctx.FALSE(); t != nil {
+		return BoolLiteral{
+			Value:   false,
+			located: located{loc: rangeFromContext(ctx)},
+		}
+	}
+
+	if t := ctx.IDENT(); t != nil {
+		return VarExpr{
+			Name:    t.GetText(),
+			located: located{loc: rangeFromContext(ctx)},
+		}
+	}
+
+	panic(fmt.Sprintf("unexpected expression when parsing primary: `%s`", ctx.GetText()))
 }

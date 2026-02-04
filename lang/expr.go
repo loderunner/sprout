@@ -58,3 +58,20 @@ type IfExpr struct {
 }
 
 func (IfExpr) exprNode() {}
+
+type FunExpr struct {
+	located
+	ParamName string
+	ParamType string
+	Body      Expr
+}
+
+func (FunExpr) exprNode() {}
+
+type AppExpr struct {
+	located
+	Fun Expr
+	Arg Expr
+}
+
+func (AppExpr) exprNode() {}

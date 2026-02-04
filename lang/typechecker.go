@@ -18,14 +18,14 @@ func (err *TypeError) Error() string {
 	return fmt.Sprintf("at %d:%d: %s", err.Range.StartLine, err.Range.StartCol, err.Message)
 }
 
-func TypeCheck(ctx Context, expr Expr) (Type, error) {
+func TypeCheck(ctx *Context, expr Expr) (Type, error) {
 	switch expr := expr.(type) {
 	case IntLiteral:
 		return IntType{}, nil
 	case BoolLiteral:
 		return BoolType{}, nil
 	case VarExpr:
-		if varType, ok := ctx[expr.Name]; ok {
+		if varType, ok := ctx.Vars[expr.Name]; ok {
 			return varType, nil
 		}
 		return nil, typeErrorf(expr, "unknown variable: %s", expr.Name)
@@ -34,7 +34,7 @@ func TypeCheck(ctx Context, expr Expr) (Type, error) {
 		if err != nil {
 			return nil, err
 		}
-		ctx = ctx.Extend(expr.Name, valueType)
+		ctx := ctx.WithVar(expr.Name, valueType)
 		return TypeCheck(ctx, expr.Body)
 	case IfExpr:
 		condType, err := TypeCheck(ctx, expr.Cond)
@@ -56,6 +56,34 @@ func TypeCheck(ctx Context, expr Expr) (Type, error) {
 			return nil, typeErrorf(expr.Else, "type mismatch: expected %s, got %s", thenType.TypeName(), elseType.TypeName())
 		}
 		return thenType, nil
+	case FunExpr:
+		paramType, ok := ctx.Types[expr.ParamType]
+		if !ok {
+			return nil, typeErrorf(expr, "unknown type: %s", expr.ParamType)
+		}
+		ctx := ctx.WithVar(expr.ParamName, paramType)
+		returnType, err := TypeCheck(ctx, expr.Body)
+		if err != nil {
+			return nil, err
+		}
+		return FunType{Param: paramType, Return: returnType}, nil
+	case AppExpr:
+		funType, err := TypeCheck(ctx, expr.Fun)
+		if err != nil {
+			return nil, err
+		}
+		ft, ok := funType.(FunType)
+		if !ok {
+			return nil, typeErrorf(expr.Fun, "expected Function, got %s", funType.TypeName())
+		}
+		argType, err := TypeCheck(ctx, expr.Arg)
+		if err != nil {
+			return nil, err
+		}
+		if argType != ft.Param {
+			return nil, typeErrorf(expr.Arg, "type mismatch: expected %s, got %s", ft.Param.TypeName(), argType.TypeName())
+		}
+		return ft.Return, nil
 	default:
 		panic(fmt.Sprintf("unknown expression type: %T", expr))
 	}

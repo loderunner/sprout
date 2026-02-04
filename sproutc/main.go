@@ -50,7 +50,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	ctx := make(lang.Context)
+	ctx := lang.NewContext()
 	result, err := lang.TypeCheck(ctx, expr)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "type error: %s\n", err)

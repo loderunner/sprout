@@ -2,10 +2,37 @@ package lang
 
 import "maps"
 
-type Context map[string]Type
+type Context struct {
+	Vars  map[string]Type
+	Types map[string]Type
+}
 
-func (c Context) Extend(name string, t Type) Context {
-	newCtx := maps.Clone(c)
-	newCtx[name] = t
+var baseTypes = map[string]Type{
+	"Bool": BoolType{},
+	"Int":  IntType{},
+}
+
+func NewContext() *Context {
+	return &Context{
+		Vars:  make(map[string]Type),
+		Types: baseTypes,
+	}
+}
+
+func (c *Context) WithVar(name string, t Type) *Context {
+	newCtx := &Context{
+		Vars:  maps.Clone(c.Vars),
+		Types: c.Types,
+	}
+	newCtx.Vars[name] = t
+	return newCtx
+}
+
+func (c *Context) WithType(name string, t Type) *Context {
+	newCtx := &Context{
+		Vars:  c.Vars,
+		Types: maps.Clone(c.Types),
+	}
+	newCtx.Types[name] = t
 	return newCtx
 }
