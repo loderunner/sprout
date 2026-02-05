@@ -75,3 +75,20 @@ type AppExpr struct {
 }
 
 func (AppExpr) exprNode() {}
+
+type UnaryExpr struct {
+	located
+	Op   string
+	Expr Expr
+}
+
+func (UnaryExpr) exprNode() {}
+
+type BinaryExpr struct {
+	located
+	Op    string
+	Left  Expr
+	Right Expr
+}
+
+func (BinaryExpr) exprNode() {}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"os"
@@ -9,29 +10,35 @@ import (
 )
 
 func printUsage() {
-	fmt.Fprintf(os.Stderr, "usage: %s [file]\n", os.Args[0])
+	fmt.Fprintln(os.Stderr, "usage: sproutc [flags] [file]")
+	fmt.Fprintln(os.Stderr, "flags:")
+	flag.PrintDefaults()
 	fmt.Fprintln(os.Stderr, "reads from stdin if file is omitted")
 }
 
 func main() {
+	printASTFlag := flag.Bool("print-ast", false, "print the AST after parsing and exit")
+	flag.Parse()
+
 	var err error
 	var source []byte
-	if len(os.Args) == 1 {
+	if flag.NArg() == 0 {
 		source, err = io.ReadAll(os.Stdin)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "unable to read from stdin: %s\n", err)
-			printUsage()
+			// printUsage()
 			os.Exit(1)
 		}
-	} else if len(os.Args) == 2 {
-		sourcePath := os.Args[1]
+	} else if flag.NArg() == 1 {
+		sourcePath := flag.Arg(0)
 		f, err := os.Open(sourcePath)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "unable to open file: %s\n", err)
-			printUsage()
+			// printUsage()
 			os.Exit(1)
 		}
 		defer f.Close()
+
 		source, err = io.ReadAll(f)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "unable to read file: %s\n", err)
@@ -44,10 +51,15 @@ func main() {
 		os.Exit(1)
 	}
 
-	expr, err := lang.Parse(string(source))
+	expr, err := Parse(string(source))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "syntax error: %s\n", err)
 		os.Exit(1)
+	}
+
+	if *printASTFlag {
+		printAST(expr)
+		return
 	}
 
 	ctx := lang.NewContext()

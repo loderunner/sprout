@@ -19,6 +19,24 @@ type SproutVisitor interface {
 	// Visit a parse tree produced by SproutParser#funExpr.
 	VisitFunExpr(ctx *FunExprContext) interface{}
 
+	// Visit a parse tree produced by SproutParser#compExpr.
+	VisitCompExpr(ctx *CompExprContext) interface{}
+
+	// Visit a parse tree produced by SproutParser#orExpr.
+	VisitOrExpr(ctx *OrExprContext) interface{}
+
+	// Visit a parse tree produced by SproutParser#andExpr.
+	VisitAndExpr(ctx *AndExprContext) interface{}
+
+	// Visit a parse tree produced by SproutParser#termExpr.
+	VisitTermExpr(ctx *TermExprContext) interface{}
+
+	// Visit a parse tree produced by SproutParser#factorExpr.
+	VisitFactorExpr(ctx *FactorExprContext) interface{}
+
+	// Visit a parse tree produced by SproutParser#unaryExpr.
+	VisitUnaryExpr(ctx *UnaryExprContext) interface{}
+
 	// Visit a parse tree produced by SproutParser#appExpr.
 	VisitAppExpr(ctx *AppExprContext) interface{}
 

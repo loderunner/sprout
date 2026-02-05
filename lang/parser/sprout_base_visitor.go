@@ -23,6 +23,30 @@ func (v *BaseSproutVisitor) VisitFunExpr(ctx *FunExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSproutVisitor) VisitCompExpr(ctx *CompExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSproutVisitor) VisitOrExpr(ctx *OrExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSproutVisitor) VisitAndExpr(ctx *AndExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSproutVisitor) VisitTermExpr(ctx *TermExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSproutVisitor) VisitFactorExpr(ctx *FactorExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSproutVisitor) VisitUnaryExpr(ctx *UnaryExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSproutVisitor) VisitAppExpr(ctx *AppExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }

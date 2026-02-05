@@ -8,60 +8,6 @@ import (
 	"github.com/loderunner/sprout/lang/parser"
 )
 
-type syntaxErrorListener struct {
-	*antlr.DefaultErrorListener
-	errors []*SyntaxError
-}
-
-type SyntaxError struct {
-	Line    uint
-	Col     uint
-	Message string
-}
-
-func (err *SyntaxError) Error() string {
-	return fmt.Sprintf("at %d:%d: %s", err.Line, err.Col, err.Message)
-}
-
-func (l *syntaxErrorListener) SyntaxError(
-	recognizer antlr.Recognizer,
-	offendingSymbol any,
-	line, column int,
-	msg string,
-	e antlr.RecognitionException,
-) {
-	l.errors = append(l.errors, &SyntaxError{
-		Line:    uint(line),
-		Col:     uint(column + 1),
-		Message: msg,
-	})
-}
-
-func Parse(source string) (Expr, error) {
-	errListener := syntaxErrorListener{}
-
-	input := antlr.NewInputStream(string(source))
-	lexer := parser.NewSproutLexer(input)
-	lexer.RemoveErrorListeners()
-	lexer.AddErrorListener(&errListener)
-
-	tokens := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
-	p := parser.NewSproutParser(tokens)
-	p.RemoveErrorListeners()
-	p.AddErrorListener(&errListener)
-
-	tree := p.Expr()
-
-	if len(errListener.errors) > 0 {
-		return nil, errListener.errors[0]
-	}
-
-	builder := NewASTBuilder()
-	expr := builder.VisitExpr(tree.(*parser.ExprContext)).(Expr)
-
-	return expr, nil
-}
-
 func rangeFromContext(ctx antlr.ParserRuleContext) SourceRange {
 	startToken := ctx.GetStart()
 	endToken := ctx.GetStop()
@@ -94,8 +40,8 @@ func (b *ASTBuilder) VisitExpr(ctx *parser.ExprContext) any {
 		return b.VisitFunExpr(funCtx.(*parser.FunExprContext))
 	}
 
-	if appCtx := ctx.AppExpr(); appCtx != nil {
-		return b.VisitAppExpr(appCtx.(*parser.AppExprContext))
+	if compCtx := ctx.CompExpr(); compCtx != nil {
+		return b.VisitCompExpr(compCtx.(*parser.CompExprContext))
 	}
 
 	panic(fmt.Sprintf("unexpected expression while parsing expression: `%s`", ctx.GetText()))
@@ -134,6 +80,93 @@ func (b *ASTBuilder) VisitFunExpr(ctx *parser.FunExprContext) any {
 		ParamType: paramType,
 		Body:      body,
 		located:   located{loc: rangeFromContext(ctx)},
+	}
+}
+
+func (b *ASTBuilder) VisitCompExpr(ctx *parser.CompExprContext) any {
+	left := b.VisitOrExpr(ctx.OrExpr(0).(*parser.OrExprContext)).(Expr)
+	if opCtx := ctx.COMPOP(); opCtx != nil {
+		op := opCtx.GetText()
+		right := b.VisitOrExpr(ctx.OrExpr(1).(*parser.OrExprContext)).(Expr)
+		return BinaryExpr{
+			Op:      op,
+			Left:    left,
+			Right:   right,
+			located: located{loc: rangeFromContext(ctx)},
+		}
+	}
+	return left
+}
+
+func (b *ASTBuilder) VisitOrExpr(ctx *parser.OrExprContext) any {
+	andExpr := b.VisitAndExpr(ctx.AndExpr().(*parser.AndExprContext)).(Expr)
+	if orCtx := ctx.OrExpr(); orCtx != nil {
+		left := b.VisitOrExpr(orCtx.(*parser.OrExprContext)).(Expr)
+		return BinaryExpr{
+			Op:      "||",
+			Left:    left,
+			Right:   andExpr,
+			located: located{loc: rangeFromContext(ctx)},
+		}
+	}
+	return andExpr
+}
+
+func (b *ASTBuilder) VisitAndExpr(ctx *parser.AndExprContext) any {
+	termExpr := b.VisitTermExpr(ctx.TermExpr().(*parser.TermExprContext)).(Expr)
+	if andCtx := ctx.AndExpr(); andCtx != nil {
+		left := b.VisitAndExpr(andCtx.(*parser.AndExprContext)).(Expr)
+		return BinaryExpr{
+			Op:      "&&",
+			Left:    left,
+			Right:   termExpr,
+			located: located{loc: rangeFromContext(ctx)},
+		}
+	}
+	return termExpr
+}
+
+func (b *ASTBuilder) VisitTermExpr(ctx *parser.TermExprContext) any {
+	factorExpr := b.VisitFactorExpr(ctx.FactorExpr().(*parser.FactorExprContext)).(Expr)
+	if termCtx := ctx.TermExpr(); termCtx != nil {
+		op := ctx.GetOp().GetText()
+		left := b.VisitTermExpr(termCtx.(*parser.TermExprContext)).(Expr)
+		return BinaryExpr{
+			Op:      op,
+			Left:    left,
+			Right:   factorExpr,
+			located: located{loc: rangeFromContext(ctx)},
+		}
+	}
+	return factorExpr
+}
+
+func (b *ASTBuilder) VisitFactorExpr(ctx *parser.FactorExprContext) any {
+	unaryExpr := b.VisitUnaryExpr(ctx.UnaryExpr().(*parser.UnaryExprContext)).(Expr)
+	if factorCtx := ctx.FactorExpr(); factorCtx != nil {
+		op := ctx.GetOp().GetText()
+		left := b.VisitFactorExpr(factorCtx.(*parser.FactorExprContext)).(Expr)
+		return BinaryExpr{
+			Op:      op,
+			Left:    left,
+			Right:   unaryExpr,
+			located: located{loc: rangeFromContext(ctx)},
+		}
+	}
+	return unaryExpr
+}
+
+func (b *ASTBuilder) VisitUnaryExpr(ctx *parser.UnaryExprContext) any {
+	if appCtx := ctx.AppExpr(); appCtx != nil {
+		return b.VisitAppExpr(appCtx.(*parser.AppExprContext)).(Expr)
+	}
+
+	op := ctx.GetOp().GetText()
+	expr := b.VisitUnaryExpr(ctx.UnaryExpr().(*parser.UnaryExprContext)).(Expr)
+	return UnaryExpr{
+		Op:      op,
+		Expr:    expr,
+		located: located{loc: rangeFromContext(ctx)},
 	}
 }
 
