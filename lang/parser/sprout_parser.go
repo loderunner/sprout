@@ -47,60 +47,61 @@ func sproutParserInit() {
 	}
 	staticData.PredictionContextCache = antlr.NewPredictionContextCache()
 	staticData.serializedATN = []int32{
-		4, 1, 24, 133, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
+		4, 1, 24, 135, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
 		4, 2, 5, 7, 5, 2, 6, 7, 6, 2, 7, 7, 7, 2, 8, 7, 8, 2, 9, 7, 9, 2, 10, 7,
 		10, 2, 11, 7, 11, 1, 0, 1, 0, 1, 0, 1, 0, 3, 0, 29, 8, 0, 1, 1, 1, 1, 1,
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1,
-		3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 4, 1, 4, 1, 4, 1,
-		4, 1, 4, 3, 4, 59, 8, 4, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 5, 5, 67,
-		8, 5, 10, 5, 12, 5, 70, 9, 5, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 5, 6,
-		78, 8, 6, 10, 6, 12, 6, 81, 9, 6, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 5,
-		7, 89, 8, 7, 10, 7, 12, 7, 92, 9, 7, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 8,
-		5, 8, 100, 8, 8, 10, 8, 12, 8, 103, 9, 8, 1, 9, 1, 9, 1, 9, 3, 9, 108,
-		8, 9, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10, 5, 10, 118,
-		8, 10, 10, 10, 12, 10, 121, 9, 10, 1, 11, 1, 11, 1, 11, 1, 11, 1, 11, 1,
-		11, 1, 11, 1, 11, 3, 11, 131, 8, 11, 1, 11, 0, 5, 10, 12, 14, 16, 20, 12,
-		0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 0, 3, 1, 0, 6, 7, 1, 0, 8, 9,
-		2, 0, 7, 7, 10, 10, 134, 0, 28, 1, 0, 0, 0, 2, 30, 1, 0, 0, 0, 4, 37, 1,
-		0, 0, 0, 6, 44, 1, 0, 0, 0, 8, 58, 1, 0, 0, 0, 10, 60, 1, 0, 0, 0, 12,
-		71, 1, 0, 0, 0, 14, 82, 1, 0, 0, 0, 16, 93, 1, 0, 0, 0, 18, 107, 1, 0,
-		0, 0, 20, 109, 1, 0, 0, 0, 22, 130, 1, 0, 0, 0, 24, 29, 3, 2, 1, 0, 25,
-		29, 3, 4, 2, 0, 26, 29, 3, 6, 3, 0, 27, 29, 3, 8, 4, 0, 28, 24, 1, 0, 0,
-		0, 28, 25, 1, 0, 0, 0, 28, 26, 1, 0, 0, 0, 28, 27, 1, 0, 0, 0, 29, 1, 1,
-		0, 0, 0, 30, 31, 5, 11, 0, 0, 31, 32, 5, 22, 0, 0, 32, 33, 5, 20, 0, 0,
-		33, 34, 3, 0, 0, 0, 34, 35, 5, 12, 0, 0, 35, 36, 3, 0, 0, 0, 36, 3, 1,
-		0, 0, 0, 37, 38, 5, 13, 0, 0, 38, 39, 3, 0, 0, 0, 39, 40, 5, 14, 0, 0,
-		40, 41, 3, 0, 0, 0, 41, 42, 5, 15, 0, 0, 42, 43, 3, 0, 0, 0, 43, 5, 1,
-		0, 0, 0, 44, 45, 5, 18, 0, 0, 45, 46, 5, 1, 0, 0, 46, 47, 5, 22, 0, 0,
-		47, 48, 5, 2, 0, 0, 48, 49, 5, 22, 0, 0, 49, 50, 5, 3, 0, 0, 50, 51, 5,
-		19, 0, 0, 51, 52, 3, 0, 0, 0, 52, 7, 1, 0, 0, 0, 53, 59, 3, 10, 5, 0, 54,
-		55, 3, 10, 5, 0, 55, 56, 5, 23, 0, 0, 56, 57, 3, 10, 5, 0, 57, 59, 1, 0,
-		0, 0, 58, 53, 1, 0, 0, 0, 58, 54, 1, 0, 0, 0, 59, 9, 1, 0, 0, 0, 60, 61,
-		6, 5, -1, 0, 61, 62, 3, 12, 6, 0, 62, 68, 1, 0, 0, 0, 63, 64, 10, 1, 0,
-		0, 64, 65, 5, 4, 0, 0, 65, 67, 3, 12, 6, 0, 66, 63, 1, 0, 0, 0, 67, 70,
-		1, 0, 0, 0, 68, 66, 1, 0, 0, 0, 68, 69, 1, 0, 0, 0, 69, 11, 1, 0, 0, 0,
-		70, 68, 1, 0, 0, 0, 71, 72, 6, 6, -1, 0, 72, 73, 3, 14, 7, 0, 73, 79, 1,
-		0, 0, 0, 74, 75, 10, 1, 0, 0, 75, 76, 5, 5, 0, 0, 76, 78, 3, 14, 7, 0,
-		77, 74, 1, 0, 0, 0, 78, 81, 1, 0, 0, 0, 79, 77, 1, 0, 0, 0, 79, 80, 1,
-		0, 0, 0, 80, 13, 1, 0, 0, 0, 81, 79, 1, 0, 0, 0, 82, 83, 6, 7, -1, 0, 83,
-		84, 3, 16, 8, 0, 84, 90, 1, 0, 0, 0, 85, 86, 10, 1, 0, 0, 86, 87, 7, 0,
-		0, 0, 87, 89, 3, 16, 8, 0, 88, 85, 1, 0, 0, 0, 89, 92, 1, 0, 0, 0, 90,
-		88, 1, 0, 0, 0, 90, 91, 1, 0, 0, 0, 91, 15, 1, 0, 0, 0, 92, 90, 1, 0, 0,
-		0, 93, 94, 6, 8, -1, 0, 94, 95, 3, 18, 9, 0, 95, 101, 1, 0, 0, 0, 96, 97,
-		10, 1, 0, 0, 97, 98, 7, 1, 0, 0, 98, 100, 3, 18, 9, 0, 99, 96, 1, 0, 0,
-		0, 100, 103, 1, 0, 0, 0, 101, 99, 1, 0, 0, 0, 101, 102, 1, 0, 0, 0, 102,
-		17, 1, 0, 0, 0, 103, 101, 1, 0, 0, 0, 104, 108, 3, 20, 10, 0, 105, 106,
-		7, 2, 0, 0, 106, 108, 3, 18, 9, 0, 107, 104, 1, 0, 0, 0, 107, 105, 1, 0,
-		0, 0, 108, 19, 1, 0, 0, 0, 109, 110, 6, 10, -1, 0, 110, 111, 3, 22, 11,
-		0, 111, 119, 1, 0, 0, 0, 112, 113, 10, 1, 0, 0, 113, 114, 5, 1, 0, 0, 114,
-		115, 3, 0, 0, 0, 115, 116, 5, 3, 0, 0, 116, 118, 1, 0, 0, 0, 117, 112,
-		1, 0, 0, 0, 118, 121, 1, 0, 0, 0, 119, 117, 1, 0, 0, 0, 119, 120, 1, 0,
-		0, 0, 120, 21, 1, 0, 0, 0, 121, 119, 1, 0, 0, 0, 122, 131, 5, 21, 0, 0,
-		123, 131, 5, 16, 0, 0, 124, 131, 5, 17, 0, 0, 125, 131, 5, 22, 0, 0, 126,
-		127, 5, 1, 0, 0, 127, 128, 3, 0, 0, 0, 128, 129, 5, 3, 0, 0, 129, 131,
-		1, 0, 0, 0, 130, 122, 1, 0, 0, 0, 130, 123, 1, 0, 0, 0, 130, 124, 1, 0,
-		0, 0, 130, 125, 1, 0, 0, 0, 130, 126, 1, 0, 0, 0, 131, 23, 1, 0, 0, 0,
-		9, 28, 58, 68, 79, 90, 101, 107, 119, 130,
+		3, 1, 3, 1, 3, 1, 3, 1, 3, 3, 3, 50, 8, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 4,
+		1, 4, 1, 4, 1, 4, 1, 4, 3, 4, 61, 8, 4, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1,
+		5, 5, 5, 69, 8, 5, 10, 5, 12, 5, 72, 9, 5, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6,
+		1, 6, 5, 6, 80, 8, 6, 10, 6, 12, 6, 83, 9, 6, 1, 7, 1, 7, 1, 7, 1, 7, 1,
+		7, 1, 7, 5, 7, 91, 8, 7, 10, 7, 12, 7, 94, 9, 7, 1, 8, 1, 8, 1, 8, 1, 8,
+		1, 8, 1, 8, 5, 8, 102, 8, 8, 10, 8, 12, 8, 105, 9, 8, 1, 9, 1, 9, 1, 9,
+		3, 9, 110, 8, 9, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10,
+		5, 10, 120, 8, 10, 10, 10, 12, 10, 123, 9, 10, 1, 11, 1, 11, 1, 11, 1,
+		11, 1, 11, 1, 11, 1, 11, 1, 11, 3, 11, 133, 8, 11, 1, 11, 0, 5, 10, 12,
+		14, 16, 20, 12, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 0, 3, 1, 0,
+		6, 7, 1, 0, 8, 9, 2, 0, 7, 7, 10, 10, 137, 0, 28, 1, 0, 0, 0, 2, 30, 1,
+		0, 0, 0, 4, 37, 1, 0, 0, 0, 6, 44, 1, 0, 0, 0, 8, 60, 1, 0, 0, 0, 10, 62,
+		1, 0, 0, 0, 12, 73, 1, 0, 0, 0, 14, 84, 1, 0, 0, 0, 16, 95, 1, 0, 0, 0,
+		18, 109, 1, 0, 0, 0, 20, 111, 1, 0, 0, 0, 22, 132, 1, 0, 0, 0, 24, 29,
+		3, 2, 1, 0, 25, 29, 3, 4, 2, 0, 26, 29, 3, 6, 3, 0, 27, 29, 3, 8, 4, 0,
+		28, 24, 1, 0, 0, 0, 28, 25, 1, 0, 0, 0, 28, 26, 1, 0, 0, 0, 28, 27, 1,
+		0, 0, 0, 29, 1, 1, 0, 0, 0, 30, 31, 5, 11, 0, 0, 31, 32, 5, 22, 0, 0, 32,
+		33, 5, 20, 0, 0, 33, 34, 3, 0, 0, 0, 34, 35, 5, 12, 0, 0, 35, 36, 3, 0,
+		0, 0, 36, 3, 1, 0, 0, 0, 37, 38, 5, 13, 0, 0, 38, 39, 3, 0, 0, 0, 39, 40,
+		5, 14, 0, 0, 40, 41, 3, 0, 0, 0, 41, 42, 5, 15, 0, 0, 42, 43, 3, 0, 0,
+		0, 43, 5, 1, 0, 0, 0, 44, 45, 5, 18, 0, 0, 45, 46, 5, 1, 0, 0, 46, 49,
+		5, 22, 0, 0, 47, 48, 5, 2, 0, 0, 48, 50, 5, 22, 0, 0, 49, 47, 1, 0, 0,
+		0, 49, 50, 1, 0, 0, 0, 50, 51, 1, 0, 0, 0, 51, 52, 5, 3, 0, 0, 52, 53,
+		5, 19, 0, 0, 53, 54, 3, 0, 0, 0, 54, 7, 1, 0, 0, 0, 55, 61, 3, 10, 5, 0,
+		56, 57, 3, 10, 5, 0, 57, 58, 5, 23, 0, 0, 58, 59, 3, 10, 5, 0, 59, 61,
+		1, 0, 0, 0, 60, 55, 1, 0, 0, 0, 60, 56, 1, 0, 0, 0, 61, 9, 1, 0, 0, 0,
+		62, 63, 6, 5, -1, 0, 63, 64, 3, 12, 6, 0, 64, 70, 1, 0, 0, 0, 65, 66, 10,
+		1, 0, 0, 66, 67, 5, 4, 0, 0, 67, 69, 3, 12, 6, 0, 68, 65, 1, 0, 0, 0, 69,
+		72, 1, 0, 0, 0, 70, 68, 1, 0, 0, 0, 70, 71, 1, 0, 0, 0, 71, 11, 1, 0, 0,
+		0, 72, 70, 1, 0, 0, 0, 73, 74, 6, 6, -1, 0, 74, 75, 3, 14, 7, 0, 75, 81,
+		1, 0, 0, 0, 76, 77, 10, 1, 0, 0, 77, 78, 5, 5, 0, 0, 78, 80, 3, 14, 7,
+		0, 79, 76, 1, 0, 0, 0, 80, 83, 1, 0, 0, 0, 81, 79, 1, 0, 0, 0, 81, 82,
+		1, 0, 0, 0, 82, 13, 1, 0, 0, 0, 83, 81, 1, 0, 0, 0, 84, 85, 6, 7, -1, 0,
+		85, 86, 3, 16, 8, 0, 86, 92, 1, 0, 0, 0, 87, 88, 10, 1, 0, 0, 88, 89, 7,
+		0, 0, 0, 89, 91, 3, 16, 8, 0, 90, 87, 1, 0, 0, 0, 91, 94, 1, 0, 0, 0, 92,
+		90, 1, 0, 0, 0, 92, 93, 1, 0, 0, 0, 93, 15, 1, 0, 0, 0, 94, 92, 1, 0, 0,
+		0, 95, 96, 6, 8, -1, 0, 96, 97, 3, 18, 9, 0, 97, 103, 1, 0, 0, 0, 98, 99,
+		10, 1, 0, 0, 99, 100, 7, 1, 0, 0, 100, 102, 3, 18, 9, 0, 101, 98, 1, 0,
+		0, 0, 102, 105, 1, 0, 0, 0, 103, 101, 1, 0, 0, 0, 103, 104, 1, 0, 0, 0,
+		104, 17, 1, 0, 0, 0, 105, 103, 1, 0, 0, 0, 106, 110, 3, 20, 10, 0, 107,
+		108, 7, 2, 0, 0, 108, 110, 3, 18, 9, 0, 109, 106, 1, 0, 0, 0, 109, 107,
+		1, 0, 0, 0, 110, 19, 1, 0, 0, 0, 111, 112, 6, 10, -1, 0, 112, 113, 3, 22,
+		11, 0, 113, 121, 1, 0, 0, 0, 114, 115, 10, 1, 0, 0, 115, 116, 5, 1, 0,
+		0, 116, 117, 3, 0, 0, 0, 117, 118, 5, 3, 0, 0, 118, 120, 1, 0, 0, 0, 119,
+		114, 1, 0, 0, 0, 120, 123, 1, 0, 0, 0, 121, 119, 1, 0, 0, 0, 121, 122,
+		1, 0, 0, 0, 122, 21, 1, 0, 0, 0, 123, 121, 1, 0, 0, 0, 124, 133, 5, 21,
+		0, 0, 125, 133, 5, 16, 0, 0, 126, 133, 5, 17, 0, 0, 127, 133, 5, 22, 0,
+		0, 128, 129, 5, 1, 0, 0, 129, 130, 3, 0, 0, 0, 130, 131, 5, 3, 0, 0, 131,
+		133, 1, 0, 0, 0, 132, 124, 1, 0, 0, 0, 132, 125, 1, 0, 0, 0, 132, 126,
+		1, 0, 0, 0, 132, 127, 1, 0, 0, 0, 132, 128, 1, 0, 0, 0, 133, 23, 1, 0,
+		0, 0, 10, 28, 49, 60, 70, 81, 92, 103, 109, 121, 132,
 	}
 	deserializer := antlr.NewATNDeserializer(nil)
 	staticData.atn = deserializer.Deserialize(staticData.serializedATN)
@@ -830,6 +831,8 @@ func (s *FunExprContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 func (p *SproutParser) FunExpr() (localctx IFunExprContext) {
 	localctx = NewFunExprContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 6, SproutParserRULE_funExpr)
+	var _la int
+
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(44)
@@ -855,24 +858,34 @@ func (p *SproutParser) FunExpr() (localctx IFunExprContext) {
 			goto errorExit
 		}
 	}
-	{
-		p.SetState(47)
-		p.Match(SproutParserT__1)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
+	p.SetState(49)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+	_la = p.GetTokenStream().LA(1)
+
+	if _la == SproutParserT__1 {
+		{
+			p.SetState(47)
+			p.Match(SproutParserT__1)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
+		{
+			p.SetState(48)
+			p.Match(SproutParserIDENT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
 	}
 	{
-		p.SetState(48)
-		p.Match(SproutParserIDENT)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	{
-		p.SetState(49)
+		p.SetState(51)
 		p.Match(SproutParserT__2)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -880,7 +893,7 @@ func (p *SproutParser) FunExpr() (localctx IFunExprContext) {
 		}
 	}
 	{
-		p.SetState(50)
+		p.SetState(52)
 		p.Match(SproutParserARROW)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -888,7 +901,7 @@ func (p *SproutParser) FunExpr() (localctx IFunExprContext) {
 		}
 	}
 	{
-		p.SetState(51)
+		p.SetState(53)
 		p.Expr()
 	}
 
@@ -1019,28 +1032,28 @@ func (s *CompExprContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 func (p *SproutParser) CompExpr() (localctx ICompExprContext) {
 	localctx = NewCompExprContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 8, SproutParserRULE_compExpr)
-	p.SetState(58)
+	p.SetState(60)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 
-	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 1, p.GetParserRuleContext()) {
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 2, p.GetParserRuleContext()) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(53)
+			p.SetState(55)
 			p.orExpr(0)
 		}
 
 	case 2:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(54)
+			p.SetState(56)
 			p.orExpr(0)
 		}
 		{
-			p.SetState(55)
+			p.SetState(57)
 			p.Match(SproutParserCOMPOP)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1048,7 +1061,7 @@ func (p *SproutParser) CompExpr() (localctx ICompExprContext) {
 			}
 		}
 		{
-			p.SetState(56)
+			p.SetState(58)
 			p.orExpr(0)
 		}
 
@@ -1183,17 +1196,17 @@ func (p *SproutParser) orExpr(_p int) (localctx IOrExprContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(61)
+		p.SetState(63)
 		p.andExpr(0)
 	}
 
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
-	p.SetState(68)
+	p.SetState(70)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
-	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 2, p.GetParserRuleContext())
+	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 3, p.GetParserRuleContext())
 	if p.HasError() {
 		goto errorExit
 	}
@@ -1205,14 +1218,14 @@ func (p *SproutParser) orExpr(_p int) (localctx IOrExprContext) {
 			_prevctx = localctx
 			localctx = NewOrExprContext(p, _parentctx, _parentState)
 			p.PushNewRecursionContext(localctx, _startState, SproutParserRULE_orExpr)
-			p.SetState(63)
+			p.SetState(65)
 
 			if !(p.Precpred(p.GetParserRuleContext(), 1)) {
 				p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 1)", ""))
 				goto errorExit
 			}
 			{
-				p.SetState(64)
+				p.SetState(66)
 				p.Match(SproutParserT__3)
 				if p.HasError() {
 					// Recognition error - abort rule
@@ -1220,17 +1233,17 @@ func (p *SproutParser) orExpr(_p int) (localctx IOrExprContext) {
 				}
 			}
 			{
-				p.SetState(65)
+				p.SetState(67)
 				p.andExpr(0)
 			}
 
 		}
-		p.SetState(70)
+		p.SetState(72)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
-		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 2, p.GetParserRuleContext())
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 3, p.GetParserRuleContext())
 		if p.HasError() {
 			goto errorExit
 		}
@@ -1363,17 +1376,17 @@ func (p *SproutParser) andExpr(_p int) (localctx IAndExprContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(72)
+		p.SetState(74)
 		p.termExpr(0)
 	}
 
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
-	p.SetState(79)
+	p.SetState(81)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
-	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 3, p.GetParserRuleContext())
+	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 4, p.GetParserRuleContext())
 	if p.HasError() {
 		goto errorExit
 	}
@@ -1385,14 +1398,14 @@ func (p *SproutParser) andExpr(_p int) (localctx IAndExprContext) {
 			_prevctx = localctx
 			localctx = NewAndExprContext(p, _parentctx, _parentState)
 			p.PushNewRecursionContext(localctx, _startState, SproutParserRULE_andExpr)
-			p.SetState(74)
+			p.SetState(76)
 
 			if !(p.Precpred(p.GetParserRuleContext(), 1)) {
 				p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 1)", ""))
 				goto errorExit
 			}
 			{
-				p.SetState(75)
+				p.SetState(77)
 				p.Match(SproutParserT__4)
 				if p.HasError() {
 					// Recognition error - abort rule
@@ -1400,17 +1413,17 @@ func (p *SproutParser) andExpr(_p int) (localctx IAndExprContext) {
 				}
 			}
 			{
-				p.SetState(76)
+				p.SetState(78)
 				p.termExpr(0)
 			}
 
 		}
-		p.SetState(81)
+		p.SetState(83)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
-		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 3, p.GetParserRuleContext())
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 4, p.GetParserRuleContext())
 		if p.HasError() {
 			goto errorExit
 		}
@@ -1556,17 +1569,17 @@ func (p *SproutParser) termExpr(_p int) (localctx ITermExprContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(83)
+		p.SetState(85)
 		p.factorExpr(0)
 	}
 
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
-	p.SetState(90)
+	p.SetState(92)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
-	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 4, p.GetParserRuleContext())
+	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 5, p.GetParserRuleContext())
 	if p.HasError() {
 		goto errorExit
 	}
@@ -1578,14 +1591,14 @@ func (p *SproutParser) termExpr(_p int) (localctx ITermExprContext) {
 			_prevctx = localctx
 			localctx = NewTermExprContext(p, _parentctx, _parentState)
 			p.PushNewRecursionContext(localctx, _startState, SproutParserRULE_termExpr)
-			p.SetState(85)
+			p.SetState(87)
 
 			if !(p.Precpred(p.GetParserRuleContext(), 1)) {
 				p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 1)", ""))
 				goto errorExit
 			}
 			{
-				p.SetState(86)
+				p.SetState(88)
 
 				var _lt = p.GetTokenStream().LT(1)
 
@@ -1603,17 +1616,17 @@ func (p *SproutParser) termExpr(_p int) (localctx ITermExprContext) {
 				}
 			}
 			{
-				p.SetState(87)
+				p.SetState(89)
 				p.factorExpr(0)
 			}
 
 		}
-		p.SetState(92)
+		p.SetState(94)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
-		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 4, p.GetParserRuleContext())
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 5, p.GetParserRuleContext())
 		if p.HasError() {
 			goto errorExit
 		}
@@ -1759,17 +1772,17 @@ func (p *SproutParser) factorExpr(_p int) (localctx IFactorExprContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(94)
+		p.SetState(96)
 		p.UnaryExpr()
 	}
 
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
-	p.SetState(101)
+	p.SetState(103)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
-	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 5, p.GetParserRuleContext())
+	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 6, p.GetParserRuleContext())
 	if p.HasError() {
 		goto errorExit
 	}
@@ -1781,14 +1794,14 @@ func (p *SproutParser) factorExpr(_p int) (localctx IFactorExprContext) {
 			_prevctx = localctx
 			localctx = NewFactorExprContext(p, _parentctx, _parentState)
 			p.PushNewRecursionContext(localctx, _startState, SproutParserRULE_factorExpr)
-			p.SetState(96)
+			p.SetState(98)
 
 			if !(p.Precpred(p.GetParserRuleContext(), 1)) {
 				p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 1)", ""))
 				goto errorExit
 			}
 			{
-				p.SetState(97)
+				p.SetState(99)
 
 				var _lt = p.GetTokenStream().LT(1)
 
@@ -1806,17 +1819,17 @@ func (p *SproutParser) factorExpr(_p int) (localctx IFactorExprContext) {
 				}
 			}
 			{
-				p.SetState(98)
+				p.SetState(100)
 				p.UnaryExpr()
 			}
 
 		}
-		p.SetState(103)
+		p.SetState(105)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
-		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 5, p.GetParserRuleContext())
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 6, p.GetParserRuleContext())
 		if p.HasError() {
 			goto errorExit
 		}
@@ -1948,7 +1961,7 @@ func (p *SproutParser) UnaryExpr() (localctx IUnaryExprContext) {
 	p.EnterRule(localctx, 18, SproutParserRULE_unaryExpr)
 	var _la int
 
-	p.SetState(107)
+	p.SetState(109)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -1958,14 +1971,14 @@ func (p *SproutParser) UnaryExpr() (localctx IUnaryExprContext) {
 	case SproutParserT__0, SproutParserTRUE, SproutParserFALSE, SproutParserINT, SproutParserIDENT:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(104)
+			p.SetState(106)
 			p.appExpr(0)
 		}
 
 	case SproutParserT__6, SproutParserT__9:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(105)
+			p.SetState(107)
 
 			var _lt = p.GetTokenStream().LT(1)
 
@@ -1983,7 +1996,7 @@ func (p *SproutParser) UnaryExpr() (localctx IUnaryExprContext) {
 			}
 		}
 		{
-			p.SetState(106)
+			p.SetState(108)
 			p.UnaryExpr()
 		}
 
@@ -2136,17 +2149,17 @@ func (p *SproutParser) appExpr(_p int) (localctx IAppExprContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(110)
+		p.SetState(112)
 		p.PrimaryExpr()
 	}
 
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
-	p.SetState(119)
+	p.SetState(121)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
-	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 7, p.GetParserRuleContext())
+	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 8, p.GetParserRuleContext())
 	if p.HasError() {
 		goto errorExit
 	}
@@ -2158,14 +2171,14 @@ func (p *SproutParser) appExpr(_p int) (localctx IAppExprContext) {
 			_prevctx = localctx
 			localctx = NewAppExprContext(p, _parentctx, _parentState)
 			p.PushNewRecursionContext(localctx, _startState, SproutParserRULE_appExpr)
-			p.SetState(112)
+			p.SetState(114)
 
 			if !(p.Precpred(p.GetParserRuleContext(), 1)) {
 				p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 1)", ""))
 				goto errorExit
 			}
 			{
-				p.SetState(113)
+				p.SetState(115)
 				p.Match(SproutParserT__0)
 				if p.HasError() {
 					// Recognition error - abort rule
@@ -2173,11 +2186,11 @@ func (p *SproutParser) appExpr(_p int) (localctx IAppExprContext) {
 				}
 			}
 			{
-				p.SetState(114)
+				p.SetState(116)
 				p.Expr()
 			}
 			{
-				p.SetState(115)
+				p.SetState(117)
 				p.Match(SproutParserT__2)
 				if p.HasError() {
 					// Recognition error - abort rule
@@ -2186,12 +2199,12 @@ func (p *SproutParser) appExpr(_p int) (localctx IAppExprContext) {
 			}
 
 		}
-		p.SetState(121)
+		p.SetState(123)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
-		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 7, p.GetParserRuleContext())
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 8, p.GetParserRuleContext())
 		if p.HasError() {
 			goto errorExit
 		}
@@ -2313,7 +2326,7 @@ func (s *PrimaryExprContext) Accept(visitor antlr.ParseTreeVisitor) interface{} 
 func (p *SproutParser) PrimaryExpr() (localctx IPrimaryExprContext) {
 	localctx = NewPrimaryExprContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 22, SproutParserRULE_primaryExpr)
-	p.SetState(130)
+	p.SetState(132)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -2323,7 +2336,7 @@ func (p *SproutParser) PrimaryExpr() (localctx IPrimaryExprContext) {
 	case SproutParserINT:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(122)
+			p.SetState(124)
 			p.Match(SproutParserINT)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2334,7 +2347,7 @@ func (p *SproutParser) PrimaryExpr() (localctx IPrimaryExprContext) {
 	case SproutParserTRUE:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(123)
+			p.SetState(125)
 			p.Match(SproutParserTRUE)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2345,7 +2358,7 @@ func (p *SproutParser) PrimaryExpr() (localctx IPrimaryExprContext) {
 	case SproutParserFALSE:
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(124)
+			p.SetState(126)
 			p.Match(SproutParserFALSE)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2356,7 +2369,7 @@ func (p *SproutParser) PrimaryExpr() (localctx IPrimaryExprContext) {
 	case SproutParserIDENT:
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(125)
+			p.SetState(127)
 			p.Match(SproutParserIDENT)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2367,7 +2380,7 @@ func (p *SproutParser) PrimaryExpr() (localctx IPrimaryExprContext) {
 	case SproutParserT__0:
 		p.EnterOuterAlt(localctx, 5)
 		{
-			p.SetState(126)
+			p.SetState(128)
 			p.Match(SproutParserT__0)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2375,11 +2388,11 @@ func (p *SproutParser) PrimaryExpr() (localctx IPrimaryExprContext) {
 			}
 		}
 		{
-			p.SetState(127)
+			p.SetState(129)
 			p.Expr()
 		}
 		{
-			p.SetState(128)
+			p.SetState(130)
 			p.Match(SproutParserT__2)
 			if p.HasError() {
 				// Recognition error - abort rule

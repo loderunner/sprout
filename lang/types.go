@@ -26,3 +26,11 @@ type FunType struct {
 func (f FunType) TypeName() string {
 	return fmt.Sprintf("%s -> %s", f.Param.TypeName(), f.Return.TypeName())
 }
+
+type TypeVar struct {
+	Id uint
+}
+
+func (t TypeVar) TypeName() string {
+	return fmt.Sprintf("?T%d", t.Id)
+}

@@ -73,7 +73,10 @@ func (b *ASTBuilder) VisitIfExpr(ctx *parser.IfExprContext) any {
 
 func (b *ASTBuilder) VisitFunExpr(ctx *parser.FunExprContext) any {
 	paramName := ctx.IDENT(0).GetText()
-	paramType := ctx.IDENT(1).GetText()
+	var paramType string
+	if ctx.IDENT(1) != nil {
+		paramType = ctx.IDENT(1).GetText()
+	}
 	body := b.VisitExpr(ctx.Expr().(*parser.ExprContext)).(Expr)
 	return FunExpr{
 		ParamName: paramName,

@@ -51,19 +51,18 @@ func main() {
 		os.Exit(1)
 	}
 
-	expr, err := Parse(string(source))
+	ast, err := Parse(string(source))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "syntax error: %s\n", err)
 		os.Exit(1)
 	}
 
 	if *printASTFlag {
-		printAST(expr)
+		printAST(ast)
 		return
 	}
 
-	ctx := lang.NewContext()
-	result, err := lang.TypeCheck(ctx, expr)
+	result, err := lang.TypeCheck(ast)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "type error: %s\n", err)
 		os.Exit(1)
