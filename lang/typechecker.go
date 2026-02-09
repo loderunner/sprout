@@ -62,7 +62,7 @@ func checkBoolLiteral(*Context, BoolLiteral) (Type, error) {
 
 func checkVarExpr(ctx *Context, expr VarExpr) (Type, error) {
 	if varType, ok := ctx.Vars[expr.Name]; ok {
-		return varType, nil
+		return ctx.Instantiate(varType), nil
 	}
 	return nil, typeErrorf(expr, "unknown variable: %s", expr.Name)
 }
@@ -72,7 +72,8 @@ func checkLetExpr(ctx *Context, expr LetExpr) (Type, error) {
 	if err != nil {
 		return nil, err
 	}
-	ctx = ctx.WithVar(expr.Name, valueType)
+	scheme := ctx.Generalize(valueType)
+	ctx = ctx.WithVar(expr.Name, scheme)
 	return typeCheck(ctx, expr.Body)
 }
 
@@ -111,7 +112,7 @@ func checkFunExpr(ctx *Context, expr FunExpr) (Type, error) {
 			return nil, typeErrorf(expr, "unknown type: %s", expr.ParamType)
 		}
 	}
-	ctx = ctx.WithVar(expr.ParamName, paramType)
+	ctx = ctx.WithVar(expr.ParamName, Mono(paramType))
 	returnType, err := typeCheck(ctx, expr.Body)
 	if err != nil {
 		return nil, err

@@ -1,1 +1,4 @@
-5 + 3 * 4
+let id = fun(x) -> x in
+let a = id(5) in
+let b = id(true) in
+  a + b
