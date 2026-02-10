@@ -32,5 +32,5 @@ type TypeVar struct {
 }
 
 func (t TypeVar) TypeName() string {
-	return fmt.Sprintf("?T%d", t.Id)
+	return fmt.Sprintf("'%d", t.Id)
 }

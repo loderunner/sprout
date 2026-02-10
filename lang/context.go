@@ -64,32 +64,30 @@ func (c *Context) NewTypeVar() TypeVar {
 }
 
 func (c *Context) Instantiate(s Scheme) Type {
-	localSubst := make(Substitution)
-	for _, bound := range s.Bound {
-		localSubst[bound] = c.NewTypeVar()
+	subst := make(Substitution)
+	for _, tv := range s.Bound {
+		subst[tv] = c.NewTypeVar()
 	}
-	return c.Subst.Apply(localSubst.Apply(s.Type))
+	return c.Subst.Apply(subst.Apply(s.Type))
 }
 
 func (c *Context) Generalize(t Type) Scheme {
 	t = c.Subst.Apply(t)
 
-	// 1. Find type variables in a type
 	tvs := make(map[TypeVar]struct{})
 	findTypeVars(tvs, t)
 
-	// 2. Find all free variables in the context
 	free := make(map[TypeVar]struct{})
-	for s := range maps.Values(c.Vars) {
-		findTypeVars(free, s.Type)
+	for _, s := range c.Vars {
+		sType := c.Subst.Apply(s.Type)
+		findTypeVars(free, sType)
 		for _, bound := range s.Bound {
 			delete(free, bound)
 		}
 	}
 
-	// 3. Subtract context's free type variables
-	for tv := range maps.Keys(free) {
-		delete(tvs, tv)
+	for f := range maps.Keys(free) {
+		delete(tvs, f)
 	}
 
 	return Scheme{
@@ -98,12 +96,13 @@ func (c *Context) Generalize(t Type) Scheme {
 	}
 }
 
-func findTypeVars(vars map[TypeVar]struct{}, t Type) {
+func findTypeVars(tvs map[TypeVar]struct{}, t Type) {
 	switch t := t.(type) {
 	case TypeVar:
-		vars[t] = struct{}{}
+		tvs[t] = struct{}{}
 	case FunType:
-		findTypeVars(vars, t.Param)
-		findTypeVars(vars, t.Return)
+		findTypeVars(tvs, t.Param)
+		findTypeVars(tvs, t.Return)
+		// do nothing for other types
 	}
 }
