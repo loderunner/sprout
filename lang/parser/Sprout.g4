@@ -11,7 +11,6 @@ TRUE: 'true';
 FALSE: 'false';
 FUN: 'fun';
 ARROW: '->';
-EQUALS: '=';
 
 INT: '0' | [1-9][0-9]*;
 IDENT: [A-Za-z_][0-9A-Za-z_]*;
@@ -22,9 +21,11 @@ WS: [ \t\r\n]+ -> skip;
 // ============ Parser Rules ============
 
 expr: letExpr | ifExpr | funExpr | compExpr;
-letExpr: LET IDENT EQUALS expr IN expr;
+letExpr: LET IDENT (':' typeExpr)? '=' expr IN expr;
+typeExpr: primaryTypeExpr | primaryTypeExpr ARROW typeExpr;
+primaryTypeExpr: IDENT | '(' typeExpr ')';
 ifExpr: IF expr THEN expr ELSE expr;
-funExpr: FUN '(' IDENT (':' IDENT)? ')' ARROW expr;
+funExpr: FUN '(' IDENT (':' typeExpr)? ')' ARROW expr;
 compExpr: orExpr | orExpr COMPOP orExpr;
 orExpr: andExpr | orExpr '||' andExpr;
 andExpr: termExpr | andExpr '&&' termExpr;

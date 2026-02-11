@@ -7,9 +7,9 @@ type TypeError struct {
 	Message string
 }
 
-func typeErrorf(expr Expr, format string, args ...any) *TypeError {
+func typeErrorf(r Ranger, format string, args ...any) *TypeError {
 	return &TypeError{
-		Range:   expr.Range(),
+		Range:   r.Range(),
 		Message: fmt.Sprintf(format, args...),
 	}
 }
@@ -72,6 +72,15 @@ func checkLetExpr(ctx *Context, expr LetExpr) (Type, error) {
 	if err != nil {
 		return nil, err
 	}
+	if expr.Type != nil {
+		typeAnnotation, err := resolveTypeExpr(ctx, expr.Type)
+		if err != nil {
+			return nil, err
+		}
+		if _, err = ctx.Subst.Unify(typeAnnotation, valueType); err != nil {
+			return nil, typeErrorf(expr.Value, "expected %s, got %s", ctx.Subst.Apply(typeAnnotation).TypeName(), ctx.Subst.Apply(valueType).TypeName())
+		}
+	}
 	ctx = ctx.WithVar(expr.Name, ctx.Generalize(valueType))
 	return typeCheck(ctx, expr.Body)
 }
@@ -100,15 +109,15 @@ func checkIfExpr(ctx *Context, expr IfExpr) (Type, error) {
 
 func checkFunExpr(ctx *Context, expr FunExpr) (Type, error) {
 	var paramType Type
-	if expr.ParamType == "" {
+	if expr.ParamType == nil {
 		// unannotated type
 		paramType = ctx.NewTypeVar()
 	} else {
 		// annotated type
-		var ok bool
-		paramType, ok = ctx.Types[expr.ParamType]
-		if !ok {
-			return nil, typeErrorf(expr, "unknown type: %s", expr.ParamType)
+		var err error
+		paramType, err = resolveTypeExpr(ctx, expr.ParamType)
+		if err != nil {
+			return nil, err
 		}
 	}
 	ctx = ctx.WithVar(expr.ParamName, Mono(paramType))
@@ -220,5 +229,28 @@ func checkBinaryExpr(ctx *Context, expr BinaryExpr) (Type, error) {
 		return BoolType{}, nil
 	default:
 		panic(fmt.Sprintf("invalid binary operator: %s", op))
+	}
+}
+
+func resolveTypeExpr(ctx *Context, tx TypeExpr) (Type, error) {
+	switch tx := tx.(type) {
+	case NamedTypeExpr:
+		t, ok := ctx.Types[tx.Name]
+		if !ok {
+			return nil, typeErrorf(tx, "unknown type: %s", tx.Name)
+		}
+		return t, nil
+	case ArrowTypeExpr:
+		p, err := resolveTypeExpr(ctx, tx.Param)
+		if err != nil {
+			return nil, err
+		}
+		r, err := resolveTypeExpr(ctx, tx.Return)
+		if err != nil {
+			return nil, err
+		}
+		return FunType{Param: p, Return: r}, nil
+	default:
+		panic("invalid type expression: <what whould I put here?>")
 	}
 }

@@ -13,6 +13,12 @@ type SproutVisitor interface {
 	// Visit a parse tree produced by SproutParser#letExpr.
 	VisitLetExpr(ctx *LetExprContext) interface{}
 
+	// Visit a parse tree produced by SproutParser#typeExpr.
+	VisitTypeExpr(ctx *TypeExprContext) interface{}
+
+	// Visit a parse tree produced by SproutParser#primaryTypeExpr.
+	VisitPrimaryTypeExpr(ctx *PrimaryTypeExprContext) interface{}
+
 	// Visit a parse tree produced by SproutParser#ifExpr.
 	VisitIfExpr(ctx *IfExprContext) interface{}
 

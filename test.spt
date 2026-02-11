@@ -1,4 +1,3 @@
 let id = fun(x) -> x in
 let a = id(5) in
-let b = id(true) in
-  a + b
+id(true)

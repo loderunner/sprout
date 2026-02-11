@@ -7,43 +7,48 @@ type SourceRange struct {
 	EndCol    uint
 }
 
-type located struct {
+type Located struct {
 	loc SourceRange
 }
 
-func (l located) Range() SourceRange {
+func (l Located) Range() SourceRange {
 	return l.loc
+}
+
+type Ranger interface {
+	Range() SourceRange
 }
 
 type Expr interface {
 	exprNode()
-	Range() SourceRange
+	Ranger
 }
 
 type IntLiteral struct {
-	located
+	Located
 	Value int
 }
 
 func (IntLiteral) exprNode() {}
 
 type BoolLiteral struct {
-	located
+	Located
 	Value bool
 }
 
 func (BoolLiteral) exprNode() {}
 
 type VarExpr struct {
-	located
+	Located
 	Name string
 }
 
 func (VarExpr) exprNode() {}
 
 type LetExpr struct {
-	located
+	Located
 	Name  string
+	Type  TypeExpr
 	Value Expr
 	Body  Expr
 }
@@ -51,7 +56,7 @@ type LetExpr struct {
 func (LetExpr) exprNode() {}
 
 type IfExpr struct {
-	located
+	Located
 	Cond Expr
 	Then Expr
 	Else Expr
@@ -60,16 +65,16 @@ type IfExpr struct {
 func (IfExpr) exprNode() {}
 
 type FunExpr struct {
-	located
+	Located
 	ParamName string
-	ParamType string
+	ParamType TypeExpr
 	Body      Expr
 }
 
 func (FunExpr) exprNode() {}
 
 type AppExpr struct {
-	located
+	Located
 	Fun Expr
 	Arg Expr
 }
@@ -77,7 +82,7 @@ type AppExpr struct {
 func (AppExpr) exprNode() {}
 
 type UnaryExpr struct {
-	located
+	Located
 	Op   string
 	Expr Expr
 }
@@ -85,10 +90,30 @@ type UnaryExpr struct {
 func (UnaryExpr) exprNode() {}
 
 type BinaryExpr struct {
-	located
+	Located
 	Op    string
 	Left  Expr
 	Right Expr
 }
 
 func (BinaryExpr) exprNode() {}
+
+type TypeExpr interface {
+	typeExprNode()
+	Ranger
+}
+
+type NamedTypeExpr struct {
+	Located
+	Name string
+}
+
+func (NamedTypeExpr) typeExprNode() {}
+
+type ArrowTypeExpr struct {
+	Located
+	Param  TypeExpr
+	Return TypeExpr
+}
+
+func (ArrowTypeExpr) typeExprNode() {}
