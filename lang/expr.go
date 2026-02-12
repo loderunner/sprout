@@ -45,6 +45,15 @@ type VarExpr struct {
 
 func (VarExpr) exprNode() {}
 
+type TypeDefExpr struct {
+	Located
+	Name string
+	Type TypeExpr
+	Body Expr
+}
+
+func (TypeDefExpr) exprNode() {}
+
 type LetExpr struct {
 	Located
 	Name  string

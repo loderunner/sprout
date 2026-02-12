@@ -8,6 +8,8 @@ func (s Substitution) Apply(t Type) Type {
 	switch t := t.(type) {
 	case IntType, BoolType:
 		return t
+	case AliasType:
+		return AliasType{Name: t.Name, Underlying: s.Apply(t.Underlying)}
 	case FunType:
 		return FunType{Param: s.Apply(t.Param), Return: s.Apply(t.Return)}
 	case TypeVar:
@@ -41,6 +43,13 @@ func (s Substitution) Unify(a, b Type) (Type, error) {
 		}
 		s[b] = a
 		return a, nil
+	}
+
+	if a, ok := a.(AliasType); ok {
+		return s.Unify(a.Underlying, b)
+	}
+	if b, ok := b.(AliasType); ok {
+		return s.Unify(a, b.Underlying)
 	}
 
 	switch a := a.(type) {
@@ -77,6 +86,8 @@ func (s Substitution) Occurs(tv TypeVar, t Type) bool {
 	switch t := t.(type) {
 	case BoolType, IntType:
 		return false
+	case AliasType:
+		return s.Occurs(tv, t.Underlying)
 	case TypeVar:
 		return tv == t
 	case FunType:

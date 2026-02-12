@@ -35,6 +35,8 @@ func typeCheck(ctx *Context, expr Expr) (Type, error) {
 		return checkBoolLiteral(ctx, expr)
 	case VarExpr:
 		return checkVarExpr(ctx, expr)
+	case TypeDefExpr:
+		return checkTypeDefExpr(ctx, expr)
 	case LetExpr:
 		return checkLetExpr(ctx, expr)
 	case IfExpr:
@@ -67,6 +69,18 @@ func checkVarExpr(ctx *Context, expr VarExpr) (Type, error) {
 	return nil, typeErrorf(expr, "unknown variable: %s", expr.Name)
 }
 
+func checkTypeDefExpr(ctx *Context, expr TypeDefExpr) (Type, error) {
+	if _, ok := ctx.Types[expr.Name]; ok {
+		return nil, typeErrorf(expr, "type %s already exists", expr.Name)
+	}
+	t, err := resolveTypeExpr(ctx, expr.Type)
+	if err != nil {
+		return nil, err
+	}
+	ctx = ctx.WithType(expr.Name, t)
+	return typeCheck(ctx, expr.Body)
+}
+
 func checkLetExpr(ctx *Context, expr LetExpr) (Type, error) {
 	valueType, err := typeCheck(ctx, expr.Value)
 	if err != nil {
@@ -80,8 +94,10 @@ func checkLetExpr(ctx *Context, expr LetExpr) (Type, error) {
 		if _, err = ctx.Subst.Unify(typeAnnotation, valueType); err != nil {
 			return nil, typeErrorf(expr.Value, "expected %s, got %s", ctx.Subst.Apply(typeAnnotation).TypeName(), ctx.Subst.Apply(valueType).TypeName())
 		}
+		ctx = ctx.WithVar(expr.Name, ctx.Generalize(typeAnnotation))
+	} else {
+		ctx = ctx.WithVar(expr.Name, ctx.Generalize(valueType))
 	}
-	ctx = ctx.WithVar(expr.Name, ctx.Generalize(valueType))
 	return typeCheck(ctx, expr.Body)
 }
 
@@ -239,7 +255,10 @@ func resolveTypeExpr(ctx *Context, tx TypeExpr) (Type, error) {
 		if !ok {
 			return nil, typeErrorf(tx, "unknown type: %s", tx.Name)
 		}
-		return t, nil
+		if tx.Name == t.TypeName() {
+			return t, nil
+		}
+		return AliasType{Name: tx.Name, Underlying: t}, nil
 	case ArrowTypeExpr:
 		p, err := resolveTypeExpr(ctx, tx.Param)
 		if err != nil {
@@ -251,6 +270,6 @@ func resolveTypeExpr(ctx *Context, tx TypeExpr) (Type, error) {
 		}
 		return FunType{Param: p, Return: r}, nil
 	default:
-		panic("invalid type expression: <what whould I put here?>")
+		panic(fmt.Sprintf("invalid type expression: %T", tx))
 	}
 }

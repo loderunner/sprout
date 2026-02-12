@@ -22,8 +22,8 @@ type Context struct {
 }
 
 var baseTypes = map[string]Type{
-	"Bool": BoolType{},
-	"Int":  IntType{},
+	BoolType.TypeName(BoolType{}): BoolType{},
+	IntType.TypeName(IntType{}):   IntType{},
 }
 
 func NewContext() *Context {
@@ -86,7 +86,7 @@ func (c *Context) Generalize(t Type) Scheme {
 		}
 	}
 
-	for f := range maps.Keys(free) {
+	for f := range free {
 		delete(tvs, f)
 	}
 

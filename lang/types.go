@@ -34,3 +34,12 @@ type TypeVar struct {
 func (t TypeVar) TypeName() string {
 	return fmt.Sprintf("'%d", t.Id)
 }
+
+type AliasType struct {
+	Name       string
+	Underlying Type
+}
+
+func (a AliasType) TypeName() string {
+	return a.Name
+}

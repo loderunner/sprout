@@ -15,6 +15,10 @@ func (v *BaseSproutVisitor) VisitLetExpr(ctx *LetExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSproutVisitor) VisitTypeDefExpr(ctx *TypeDefExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSproutVisitor) VisitTypeExpr(ctx *TypeExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }

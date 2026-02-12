@@ -3,6 +3,7 @@ grammar Sprout;
 // ============ Lexer Rules ============
 
 LET: 'let';
+TYPE: 'type';
 IN: 'in';
 IF: 'if';
 THEN: 'then';
@@ -20,8 +21,9 @@ WS: [ \t\r\n]+ -> skip;
 
 // ============ Parser Rules ============
 
-expr: letExpr | ifExpr | funExpr | compExpr;
+expr: typeDefExpr | letExpr | ifExpr | funExpr | compExpr;
 letExpr: LET IDENT (':' typeExpr)? '=' expr IN expr;
+typeDefExpr: TYPE IDENT '=' typeExpr IN expr;
 typeExpr: primaryTypeExpr | primaryTypeExpr ARROW typeExpr;
 primaryTypeExpr: IDENT | '(' typeExpr ')';
 ifExpr: IF expr THEN expr ELSE expr;

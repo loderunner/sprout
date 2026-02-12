@@ -28,6 +28,10 @@ func NewASTBuilder() *ASTBuilder {
 }
 
 func (b *ASTBuilder) VisitExpr(ctx *parser.ExprContext) Expr {
+	if typeDefCtx := ctx.TypeDefExpr(); typeDefCtx != nil {
+		return b.VisitTypeDefExpr(typeDefCtx.(*parser.TypeDefExprContext))
+	}
+
 	if letCtx := ctx.LetExpr(); letCtx != nil {
 		return b.VisitLetExpr(letCtx.(*parser.LetExprContext))
 	}
@@ -47,11 +51,23 @@ func (b *ASTBuilder) VisitExpr(ctx *parser.ExprContext) Expr {
 	panic(fmt.Sprintf("unexpected expression while parsing expression: `%s`", ctx.GetText()))
 }
 
+func (b *ASTBuilder) VisitTypeDefExpr(ctx *parser.TypeDefExprContext) Expr {
+	ident := ctx.IDENT().GetText()
+	typeExpr := b.VisitTypeExpr(ctx.TypeExpr().(*parser.TypeExprContext))
+	body := b.VisitExpr(ctx.Expr().(*parser.ExprContext))
+	return TypeDefExpr{
+		Name:    ident,
+		Type:    typeExpr,
+		Body:    body,
+		Located: Located{loc: rangeFromContext(ctx)},
+	}
+}
+
 func (b *ASTBuilder) VisitLetExpr(ctx *parser.LetExprContext) Expr {
 	name := ctx.IDENT().GetText()
 	var typeExpr TypeExpr
-	if typeExprCtx := ctx.TypeExpr(); typeExprCtx != nil {
-		typeExpr = b.VisitTypeExpr(typeExprCtx.(*parser.TypeExprContext))
+	if typeCtx := ctx.TypeExpr(); typeCtx != nil {
+		typeExpr = b.VisitTypeExpr(typeCtx.(*parser.TypeExprContext))
 	}
 	value := b.VisitExpr(ctx.Expr(0).(*parser.ExprContext))
 	body := b.VisitExpr(ctx.Expr(1).(*parser.ExprContext))
@@ -102,8 +118,8 @@ func (b *ASTBuilder) VisitIfExpr(ctx *parser.IfExprContext) Expr {
 func (b *ASTBuilder) VisitFunExpr(ctx *parser.FunExprContext) Expr {
 	paramName := ctx.IDENT().GetText()
 	var paramType TypeExpr
-	if typeExprCtx := ctx.TypeExpr(); typeExprCtx != nil {
-		paramType = b.VisitTypeExpr(typeExprCtx.(*parser.TypeExprContext))
+	if typeCtx := ctx.TypeExpr(); typeCtx != nil {
+		paramType = b.VisitTypeExpr(typeCtx.(*parser.TypeExprContext))
 	}
 	body := b.VisitExpr(ctx.Expr().(*parser.ExprContext))
 	return FunExpr{

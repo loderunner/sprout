@@ -57,7 +57,7 @@ func Parse(source string) (lang.Expr, error) {
 	}
 
 	builder := lang.NewASTBuilder()
-	expr := builder.VisitExpr(tree.(*parser.ExprContext)).(lang.Expr)
+	expr := builder.VisitExpr(tree.(*parser.ExprContext))
 
 	return expr, nil
 }
